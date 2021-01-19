@@ -4,6 +4,7 @@
             <li>
                 <a href="/polls/{{ question.id }}/">{{ question.questino_text }}</a>
             </li>
+        {% endfor %}
     </ul>
 {% else %}
     <p>No polls are available.</p>
