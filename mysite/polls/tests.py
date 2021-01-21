@@ -15,6 +15,7 @@ def create_question(questino_text,days):
     time = timezone.now() + datetime.timedelta(days=days)
     return Question.objects.create(questino_text=questino_text,pub_date=time)
 
+
 class QuestionIndexViewTests(TestCase):
     def test_no_question(self):
         response = self.client.get(reverse('polls:index'))
@@ -45,7 +46,8 @@ class QuestionIndexViewTests(TestCase):
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(response.context['latest_question_list'],['<Question: Past question 2.>','<Question: Past question 1.>'])
 
-    class QuestionDetailViewTests(TestCase):
+
+class QuestionDetailViewTests(TestCase):
         def test_future_question(self):
             future_question = create_question(questino_text='Future question.',days=5)
             url = reverse('polls:detail',args=(future_question.id,))
@@ -64,7 +66,7 @@ class QuestionModelTests(TestCase):
         """was_published_recently() returns False for quesitons whose pub_date is in teh future."""
         time = timezone.now() + datetime.timedelta(days=30)
         future_question = Question(pub_date=time)
-        self.assertIs(future_quesiton.was_published_recently(),False)
+        self.assertIs(future_question.was_published_recently(),False)
 
     def test_was_published_recently_with_old_question(self):
         """was_published_recently() returns False for questions whose pub_date is older than 1 day."""
